@@ -3,3 +3,62 @@
 𒌫
 
 * Introduction
+* [[https://dhall-lang.org][Dhall]] configuration
+** Introduction
+   The feeds and urls are declared using the [[https://dhall-lang.org][Dhall]] configuration language
+   and its implementation in rust.
+   This is a great configuration since we can then create
+   community lists of feeds to be included in dhall automatically.
+** Channel source
+
+The main =rss= source item can have the following fields
+
+| Field | Type     | Optional |
+|-------+----------+----------|
+| url   | string   | no       |
+| name  | string   | no       |
+| tags  | [string] | no       |
+| cmd   | String   | yes      |
+
+In =dhall=, this can be translated in the following type
+
+#+begin_src dhall :tangle urrss.dhall :comments both
+{ Type =
+    { url : Optional Text, name : Text, cmd : Optional Text, tags : List Text }
+, default = { cmd = None Text } ∧ { tags = [] : List Text }
+}
+#+end_src
+
+The equivalent in Rust will therefore be a simple struct
+
+#+begin_src rust :tangle src/source.rs :comments both
+extern crate serde;
+
+#[derive(Debug, serde::Deserialize)]
+pub struct Source {
+    pub name: String,
+    pub url: Option<String>,
+    pub cmd: Option<String>,
+    pub tags: Vec<String>,
+}
+#+end_src
+
+* Maildir format
+  In order to understand how the program should transform
+  the =rss= sources, we need to understand first the =maildir=
+  format
+
+  A =maildir= is composed of three folders,
+  - new ::
+    This is where newly received messages are stored by the
+    Mail User Agent. In our case, we will create files
+    in this directory.
+  - cur :: 
+    This is where non-new messages are stored.
+    =cur= will be ignored by us.
+  - tmp ::
+    This is a transit zone for messages in the process of being
+    received. =tmp= will be ignored by us.
+
+** Sources
+   - https://cr.yp.to/proto/maildir.html
