@@ -60,5 +60,26 @@ pub struct Source {
     This is a transit zone for messages in the process of being
     received. =tmp= will be ignored by us.
 
+** Basic mail headers
+
+A message will look like this in =ur-rss=
+
+#+begin_src mail
+From: The Rust Release Team <urrss@urrss.org>
+To: URRSS <urrss@urrss.org>
+Subject: Announcing Rust 1.53.0
+List-ID: rust
+Date: Wed, 22 Jun 2016 22:20:26 +0200
+Content-Type: text/html; charset=UTF-8
+Mime-Version: 1.0
+
+content...
+#+end_src
+
+
+
+
 ** Sources
-   - https://cr.yp.to/proto/maildir.html
+   - [[https://cr.yp.to/proto/maildir.html][General maildir format]]
+   - [[https://www.iana.org/assignments/message-headers/message-headers.xhtml][Message headers]]
+   - [[https://datatracker.ietf.org/doc/html/rfc5322#section-3.3][Date specification]]
