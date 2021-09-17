@@ -1,0 +1,12 @@
+[package]
+name = "urrss"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+reqwest = { version = "0.11.4", features = ["blocking"] }
+serde_dhall = "0.10.1"
+serde = { version = "1.0", features = ["derive"] }
+rss = "1.0"
+atom_syndication = "0.10"
+structopt = "0.3"
